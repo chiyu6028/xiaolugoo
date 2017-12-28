@@ -1,10 +1,12 @@
 
 <template>
+	<div>
   <div class="layout">
     <Layout>
       <Header>
         <Menu mode="horizontal" theme="dark" active-name="1">
-            <div class="layout-logo"></div>
+            <div class="layout-logo"><img :style="{height:'40px',width:'40px'}" src="../assets/xiaolu.jpg"></div>
+            
             <div class="layout-nav">
                 <MenuItem name="1">
                     <Icon type="ios-navigate"></Icon>
@@ -25,7 +27,7 @@
             </div>
         </Menu>
     	</Header>
-    	<Layout>
+    	<Layout :style="{height: '500px'}">
 	      <Sider hide-trigger :style="{background: '#fff'}">
 	          <Menu active-name="1-2" theme="light" width="auto" :open-names="['1']">
 	              <Submenu name="1">
@@ -55,30 +57,47 @@
 	              </Submenu>
 	          </Menu>
 	      </Sider>
-		    <Layout :style="{padding: '0 24px 24px'}">
-		        <Breadcrumb :style="{margin: '24px 0'}">
+		    <Layout :style="{padding: '0 10px 10px'}">
+		        <Breadcrumb :style="{margin: '10px 0'}">
 		            <BreadcrumbItem>Home</BreadcrumbItem>
 		            <BreadcrumbItem>Components</BreadcrumbItem>
 		            <BreadcrumbItem>Layout</BreadcrumbItem>
 		        </Breadcrumb>
-		        <Content :style="{padding: '24px', minHeight: '280px', background: '#fff'}">
+		        <Content :style="{padding: '5px', minHeight: '280px', background: '#fff'}">
 		            这是内容
 		        </Content>
 		    </Layout>
       </Layout>
     </Layout>
   </div>
+  <div>{{userName}},欢迎你。你的密码是{{password}}。当前登录次数是{{count}}</div>
+  </div>
 </template>
 <script>
-		import 'iview/dist/styles/iview.css';
-    export default {
-    	name:'home',
-    	data(){
-    		return{
-    			
-    		}
-    	}
-    }
+  export default {
+  	name:'home',
+  	data(){
+  		return{
+  			userName:'',
+  			password:'',
+  			count:'',
+  		}
+  	},
+  	created(){
+  		//生命周期-vue创建完，调用这个函数。
+  		this.getParam();
+  	},
+  	methods:{
+  		getParam(){
+  			//获取页面参数
+  			var params = this.$route.params;
+  			this.userName = params.userName;
+  			this.password = params.password;
+  			//获取vuex里改变的值
+  			this.count = this.$store.state.count;
+  		}
+  	}
+  }
 </script>
 
 <style scoped>
@@ -90,8 +109,8 @@
     overflow: hidden;
 }
 .layout-logo{
-    width: 100px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     background: #5b6270;
     border-radius: 3px;
     float: left;
