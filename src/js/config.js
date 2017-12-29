@@ -1,0 +1,1 @@
+exports.ajaxUrl = process.env.NODE_ENV === 'production' ? 'http://119.23.213.249:8080' : '/xiaolugoo';

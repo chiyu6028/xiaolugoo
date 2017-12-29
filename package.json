@@ -5,16 +5,19 @@
   "author": "chiyu6028 <chiyu6028@126.com>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "node build/dev-server.js",
     "start": "npm run dev",
     "build": "node build/build.js"
   },
   "dependencies": {
-    "axios": "^0.17.1",//请求工具
-    "iview": "^2.8.0",//基于VUE的UI,https://www.iviewui.com/
-    "vue": "^2.5.2",//vue的版本
-    "vue-router": "^3.0.1",//vue路由
-    "vuex": "^3.0.1"//vuex
+    "axios": "^0.17.1",
+    "express": "^4.16.2",
+    "iview": "^2.8.0",
+    "vue": "^2.5.2",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1",
+    "webpack-dev-middleware": "^2.0.3",
+    "webpack-hot-middleware": "^2.21.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -33,7 +36,7 @@
     "file-loader": "^1.1.4",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^2.30.1",
-    "http-proxy-middleware": "^0.17.4",//请求代理
+    "http-proxy-middleware": "^0.17.4",
     "node-notifier": "^5.1.2",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^1.2.0",

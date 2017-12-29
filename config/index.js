@@ -10,7 +10,16 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/xiaolu': {
+        // target: 'http://192.168.1.100:8088',
+        target: 'http://119.23.213.249:8080',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/xiaolu': ''
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
