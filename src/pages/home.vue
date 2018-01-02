@@ -70,7 +70,7 @@
       </Layout>
     </Layout>
   </div>
-  <div>{{userName}},欢迎你。你的密码是{{password}}。当前登录次数是{{count}}</div>
+  <div>{{userName}},欢迎你。当前登录次数是{{count}}</div>
   </div>
 </template>
 <script>
@@ -79,7 +79,6 @@
   	data(){
   		return{
   			userName:'',
-  			password:'',
   			count:'',
   		}
   	},
@@ -92,7 +91,6 @@
   			//获取页面参数
   			var params = this.$route.params;
   			this.userName = params.userName;
-  			this.password = params.password;
   			//获取vuex里改变的值
   			this.count = this.$store.state.count;
   		}

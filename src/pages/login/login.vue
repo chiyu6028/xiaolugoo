@@ -11,7 +11,7 @@
         	<Input v-model="verify" placeholder="verify" style="width: 100px"></Input>
         </Col>
         <Col span="3">
-        	<div><img :style="{height:'32px',width:'80px'}" :src="validCode"> </div>
+        	<div><img :style="{height:'32px',width:'80px'}" @click="getValidCode" :src="validCode"> </div>
         </Col>
     </Row>
 			<Button type="primary" @click="login" style="width: 300px">登录</Button>
@@ -38,9 +38,7 @@
   	},
 	  methods: {
 	  	getValidCode(){
-	  		this.$axios.get('/xiaolu/count').then(function(response){
-	  			console.log(response);
-	  		});
+	  		//获取页面验证码
 	  		this.$axios.get('/xiaolu/validateCode',{responseType: 'arraybuffer'})
 	  			.then(response => {
 			    return 'data:image/png;base64,' + btoa(
@@ -48,23 +46,33 @@
 			        .reduce((data, byte) => data + String.fromCharCode(byte), '')
 			    );
 			  }).then(data => {
-			    console.log(data);
 			    this.validCode = data;
 			  })
 	  	},
 	  	login: function(){
 	  		//获取用户名和密码
 	  		var user = {
-	  			userName: this.userName,
-	  			password: this.password,
-	  			verify: this.verify,
+	  			user_id: this.userName,
+	  			user_password: this.password,
+	  			validCode: this.verify,
 	  		}
-	  		//vuex 触发事件.
-	  		this.$store.commit('increment');
-	  		//带参数路由跳转。将用户信息传到home
-	  		this.$router.push({ name: 'home', params: user});
 
-	  		
+	  		this.$axios.get('/xiaolu/loginSubmit',{params:user}).then(response =>{
+	  			console.log(response);
+	  			if (response.data[0].flg == 1) {
+	  				//vuex 触发事件.
+			  		this.$store.commit('increment');
+			  		//带参数路由跳转。将用户信息传到home
+			  		this.$router.push({ name: 'home', params:{userName:response.data[0].user.user_name}});
+	  			}else{
+	  				if (response.data[0].flg == 4) {
+	  					this.getValidCode();
+	  					alert(response.data[0].msg);
+	  				}else{
+	  					alert(response.data[0].msg);
+	  				}
+	  			}
+	  		})
 	  	}
 	  }
 	}

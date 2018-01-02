@@ -12,13 +12,11 @@ if (!process.env.NODE_ENV) {
 var port = process.env.PORT || config.dev.port
 
 //引入webpack
-var webpack = require('webpack');
+var webpack = require('webpack')
 
-//开发时使webpack dev server 能获取(更新)到打包好的bundle js的中间件
-const webpackDevMiddleware = require('webpack-dev-middleware')
+const webpackDevMiddleware = require("webpack-dev-middleware")
 
-//热替换
-const webpackHotMiddleware = require('webpack-hot-middleware')
+const webpackHotMiddleware = require("webpack-Hot-middleware")
 
 // 使用 proxyTable
 const proxyMiddleware = require('http-proxy-middleware')
@@ -35,19 +33,28 @@ var webpackConfig = require('./webpack.dev.conf')
 var proxyTable = config.dev.proxyTable
 
 //编译webpackConfig
-var compiler = webpack(webpackConfig);
+var compiler = webpack(webpackConfig)
 
 //引入express
-var express = require('express');
+var express = require('express')
 
 //创建一个express
-var app = express();
+var app = express()
 
-app.use(webpackDevMiddleware(compiler, {
-  output: { path: config.dev.assetsPublicPath }
-}));
+//开发时使webpack dev server 能获取(更新)到打包好的bundle js的中间件
+const DevMiddleware = webpackDevMiddleware(compiler,{
+	publicPath: webpackConfig.output.publicPath,
+  quiet: true //向控制台显示任何内容 
+})
 
-app.use(webpackHotMiddleware(compiler))
+// 启动 webpack-hot-middleware，也就是我们常说的 Hot-reload
+var HotMiddleware = webpackHotMiddleware(compiler, {
+  log: () => {}
+})
+
+app.use(DevMiddleware)
+
+app.use(HotMiddleware)
 
 // proxy api requests
 // 将 proxyTable 中的请求配置挂在到启动的 express 服务上
