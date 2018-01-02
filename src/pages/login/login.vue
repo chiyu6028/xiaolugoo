@@ -4,8 +4,16 @@
 		<div>
 			<Input v-model="userName" placeholder="userName" style="width: 300px"></Input><br>
 			<Input v-model="password" placeholder="password" style="width: 300px"></Input><br>
-			<Input v-model="verify" placeholder="verify" style="width: 100px"></Input>
-			<img :style="{height:'20px',width:'40px'}" :src="validCode"> <br>
+			
+			
+			<Row>
+        <Col span="3">
+        	<Input v-model="verify" placeholder="verify" style="width: 100px"></Input>
+        </Col>
+        <Col span="3">
+        	<div><img :style="{height:'32px',width:'80px'}" :src="validCode"> </div>
+        </Col>
+    </Row>
 			<Button type="primary" @click="login" style="width: 300px">登录</Button>
 		</div>
   </div>
@@ -33,7 +41,16 @@
 	  		this.$axios.get('/xiaolu/count').then(function(response){
 	  			console.log(response);
 	  		});
-	  		this.validCode = this.$axios.get('/xiaolu/validateCode');
+	  		this.$axios.get('/xiaolu/validateCode',{responseType: 'arraybuffer'})
+	  			.then(response => {
+			    return 'data:image/png;base64,' + btoa(
+			      new Uint8Array(response.data)
+			        .reduce((data, byte) => data + String.fromCharCode(byte), '')
+			    );
+			  }).then(data => {
+			    console.log(data);
+			    this.validCode = data;
+			  })
 	  	},
 	  	login: function(){
 	  		//获取用户名和密码
