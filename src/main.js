@@ -19,8 +19,16 @@ Vue.prototype.$axios = axios;
 //全局导航守卫
 router.beforeEach((to, from, next) => {
   // ...
-  console.log(to,from);
-  console.log(store);
+  //console.log(to);
+  //console.log(from);
+  //console.log(store);
+  /*if(to.path.indexOf("system") > -1 && store.state.token == ""){
+    if (to.path.indexOf("systemLogin") > -1) {
+      next();
+    }else {
+      next("/systemLogin");
+    }
+  }*/
   //继续下一步
   next();
 })

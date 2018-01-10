@@ -1,21 +1,23 @@
 <template>
-	<div>
-		<div><img :src="logPath" alt="log" :style="{height:'40px',width:'40px'}"></div>
-		<div>
-			<Input v-model="userName" placeholder="userName" style="width: 300px"></Input><br>
-			<Input v-model="password" placeholder="password" style="width: 300px"></Input><br>
-			
-			
-			<Row>
-        <Col span="3">
-        	<Input v-model="verify" placeholder="verify" style="width: 100px"></Input>
-        </Col>
-        <Col span="3">
-        	<div><img :style="{height:'32px',width:'80px'}" @click="getValidCode" :src="validCode"> </div>
-        </Col>
-    </Row>
-			<Button type="primary" @click="login" style="width: 300px">登录</Button>
-		</div>
+	<div :style="{padding:'50px'}">
+		<!-- <div><img :src="logPath" alt="log" :style="{height:'40px',width:'40px'}"></div> -->
+		<Row>	
+			<Col span ="6" offset="9">
+				<div>
+					<Input v-model="userName" placeholder="userName"></Input><br>
+					<Input v-model="password" placeholder="password"></Input><br>
+					<Row>
+		        <Col span="10">
+		        	<Input v-model="verify" placeholder="verify"></Input>
+		        </Col>
+		        <Col span="10" offset="3">
+		        	<div><img :style="{height:'32px'}" @click="getValidCode" :src="validCode"> </div>
+		        </Col>
+		    	</Row>
+					<Button type="primary" @click="login" long>登录</Button>
+				</div>
+			</Col>
+		</Row>
   </div>
 </template>
 
@@ -62,8 +64,9 @@
 	  			if (response.data[0].flg == 1) {
 	  				//vuex 触发事件.
 			  		this.$store.commit('increment');
+			  		this.$store.state.token="123456"
 			  		//带参数路由跳转。将用户信息传到home
-			  		this.$router.push({ name: 'home', params:{userName:response.data[0].user.user_name}});
+			  		this.$router.push({ name: 'system', params:{userName:response.data[0].user.user_name}});
 	  			}else{
 	  				if (response.data[0].flg == 4) {
 	  					this.getValidCode();
