@@ -66,7 +66,7 @@
 			  		this.$store.commit('increment');
 			  		this.$store.state.token="123456"
 			  		//带参数路由跳转。将用户信息传到home
-			  		this.$router.push({ name: 'system', params:{userName:response.data[0].user.user_name}});
+			  		this.$router.push({ path: '/system', params:{userName:response.data[0].user.user_name}});
 	  			}else{
 	  				if (response.data[0].flg == 4) {
 	  					this.getValidCode();
