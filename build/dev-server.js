@@ -5,7 +5,8 @@ var config = require('../config')
 // 如果 Node 的环境无法判断当前是 dev / product 环境
 // 使用 config.dev.env.NODE_ENV 作为当前的环境
 if (!process.env.NODE_ENV) {
-  process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV)
+  var env = require('../config/dev.env')
+  process.env.NODE_ENV = JSON.parse(env.NODE_ENV)
 }
 
 //获取端口
