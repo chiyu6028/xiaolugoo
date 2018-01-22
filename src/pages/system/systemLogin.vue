@@ -4,13 +4,13 @@
 		<Row>	
 			<Col span ="6" offset="9">
 				<div>
-					<Input v-model="userName" placeholder="userName"></Input><br>
-					<Input v-model="password" placeholder="password"></Input><br>
+					<Input v-model="userName" type="text" placeholder="用户名"></Input><br>
+					<Input v-model="password" type="password" placeholder="密码"></Input><br>
 					<Row>
 		        <Col span="10">
-		        	<Input v-model="verify" placeholder="verify"></Input>
+		        	<Input v-model="verify" placeholder="验证码"></Input>
 		        </Col>
-		        <Col span="10" offset="3">
+		        <Col span="14" class="valid">
 		        	<div><img :style="{height:'32px'}" @click="getValidCode" :src="validCode"> </div>
 		        </Col>
 		    	</Row>
@@ -80,3 +80,11 @@
 	  }
 	}
 </script>
+<style>
+.valid{
+	text-align: right;
+}
+Input{
+	margin-bottom: 10px;
+}
+</style>

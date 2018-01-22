@@ -1,13 +1,22 @@
 <template>
 	<li>
-	    <div :class="{bold: isFolder}" @click="toggle" @dblclick="changeType"> {{treeData.name}}
+		<div v-for="menuData in treeData">
+			<div :class="{bold: isFolder}" @click="toggle" @dblclick="changeType"> {{menuData.name}}
+		     	<span v-if="isFolder">[{{open ? '-' : '+'}}]</span>
+		    </div>
+		    <ul v-show="open" v-if="isFolder">
+		    	<Tree class="item" :treeData="menuData.children"></Tree>
+		    	<li class="add" @click="addChild">+</li>
+		    </ul>
+		</div >
+	    <!-- <div :class="{bold: isFolder}" @click="toggle" @dblclick="changeType"> {{treeData.name}}
 	      <span v-if="isFolder">[{{open ? '-' : '+'}}]</span>
 	    </div>
 	    <ul v-show="open" v-if="isFolder">
 	      <Tree class="item" v-for="item in treeData.children" :treeData="item"></Tree>
 	      <li class="add" @click="addChild">+</li>
-	    </ul>
-	  </li>
+	    </ul> -->
+	 </li>
 </template>
 <script>
 
@@ -21,8 +30,8 @@
 	  },
 	  computed: {
 	    isFolder: function () {
-	      return this.treeData.children &&
-	        this.treeData.children.length
+	      return this.treeData &&
+	        this.treeData.length
 	    }
 	  },
 	  methods: {
@@ -48,10 +57,10 @@
 	
 </script>
 <style>
-body {
+/* body {
   font-family: Menlo, Consolas, monospace;
   color: #444;
-}
+} */
 .item {
   cursor: pointer;
 }
@@ -62,5 +71,8 @@ ul {
   padding-left: 1em;
   line-height: 1.5em;
   list-style-type: dot;
+}
+li {
+  list-style-type: none;	
 }
 </style>
