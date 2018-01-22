@@ -1,11 +1,5 @@
 <template>
-	<ul>
-		<li v-for="item in treeData">
-			<a v-if="item.pid == tempId"><span  v-if="isFolder"></span>{{item.menuName}}+</a>
-			<!-- <Tree :treeData='elseData' :tempId='item.id'></Tree> -->
-		</li>
-	</ul>
-	<!-- <li>
+	<li>
 	    <div :class="{bold: isFolder}" @click="toggle" @dblclick="changeType"> {{treeData.name}}
 	      <span v-if="isFolder">[{{open ? '-' : '+'}}]</span>
 	    </div>
@@ -13,48 +7,48 @@
 	      <Tree class="item" v-for="item in treeData.children" :treeData="item"></Tree>
 	      <li class="add" @click="addChild">+</li>
 	    </ul>
-	  </li> -->
+	  </li>
 </template>
 <script>
 
 	export default{
 		name: 'Tree',
-		props:['treeData','tempId'],
+		props:['treeData'],
 		data: function () {
 	    return {
-	      open: false,
-	      elseData:[
-	      	{id:'4',menuName:'系统菜单',pid:'1',porder:0,isFolder:true},
-					{id:'5',menuName:'系统参数',pid:'1',porder:1,isFolder:false},
-					{id:'6',menuName:'系统权限',pid:'1',porder:2,isFolder:false},
-	      ]
+	      open: false
 	    }
 	  },
 	  computed: {
-	    /*isFolder: function () {
-	      console.log(111111111);
-	      return true;
-	    }*/
+	    isFolder: function () {
+	      return this.treeData.children &&
+	        this.treeData.children.length
+	    }
 	  },
-	  beforeCreate: function () {
-	  	console.log('test');
-		},
 	  methods: {
 	    toggle: function () {
-
+	      if (this.isFolder) {
+	        this.open = !this.open
+	      }
 	    },
 	    changeType: function () {
-
+	      if (!this.isFolder) {
+	        Vue.set(this.treeData, 'children', [])
+	        this.addChild()
+	        this.open = true
+	      }
 	    },
 	    addChild: function () {
-	      console.log(this.treeData);
+	      this.treeData.children.push({
+	        name: 'new stuff'
+	      })
 	    }
 	  }
 	}
 	
 </script>
 <style>
-	body {
+body {
   font-family: Menlo, Consolas, monospace;
   color: #444;
 }
