@@ -1,10 +1,10 @@
 <template>
 	<li>
 		<div v-for="menuData in treeData">
-			<div :class="{bold: isFolder}" @click="toggle" @dblclick="changeType"> {{menuData.name}}
-		     	<span v-if="isFolder">[{{open ? '-' : '+'}}]</span>
+			<div :class="{bold: menuData.children == undefined? false : true}" @click="toggle" @dblclick="changeType"> {{menuData.name}}
+		     	<span v-if="menuData.children == undefined? false : true">[{{open ? '-' : '+'}}]</span>
 		    </div>
-		    <ul v-show="open" v-if="isFolder">
+		    <ul v-show="open" v-if="menuData.children == undefined? false : true">
 		    	<Tree class="item" :treeData="menuData.children"></Tree>
 		    	<li class="add" @click="addChild">+</li>
 		    </ul>
@@ -29,7 +29,8 @@
 	    }
 	  },
 	  computed: {
-	    isFolder: function () {
+	    isFolder: function (e) {
+	    	console.log(e)
 	      return this.treeData &&
 	        this.treeData.length
 	    }
