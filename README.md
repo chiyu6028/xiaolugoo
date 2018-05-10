@@ -1,5 +1,7 @@
 # xiaolugoo
 
+这个一个vue项目，引用iview,axios，vue_router, vuex等。
+
 > A Vue.js project
 
 ## Build Setup
